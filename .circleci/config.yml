@@ -32,14 +32,15 @@ workflows:
   linting_documents:
     jobs:
       - lint_documents
-  pr_azure_functions:
-    jobs:
-      - build_and_test_functions
-  ci_azure_functions:
-    jobs:
-      - build_and_test_functions
-      - push_artifact
-  pr_iac:
-    jobs:
-      - lint
+  
+  # pr_azure_functions:
+  #   jobs:
+  #     - build_and_test_functions
+  # ci_azure_functions:
+  #   jobs:
+  #     - build_and_test_functions
+  #     - push_artifact
+  # pr_iac:
+  #   jobs:
+  #     - lint
           
