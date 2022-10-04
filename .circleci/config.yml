@@ -40,6 +40,9 @@ workflows:
   linting_documents:
     jobs:
       - lint_documents
+  build_test:
+    jobs:
+      - build_test
   
   # pr_azure_functions:
   #   jobs:
