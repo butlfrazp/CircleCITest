@@ -32,6 +32,11 @@ jobs:
     executor: base
     steps:
       - lint_markdown
+
+  build_test:
+    executor: base
+    steps:
+      - build_test
   
   
 
