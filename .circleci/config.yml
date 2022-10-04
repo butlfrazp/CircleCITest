@@ -18,8 +18,7 @@ commands:
         description: space separated list of extra packages to install
         type: string
     steps:
-      - run: sudo apt-get update && sudo apt-get install -y cowsay
-      - run: sudo apt-get install <<parameters.packages>>
+      - run: sudo apt-get update && sudo apt-get install -y gem
   lint_markdown:
     description: "markdown linting"
     steps:
