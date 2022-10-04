@@ -17,7 +17,7 @@ commands:
     steps:
       - update_alpine_and_checkout
       - run: sudo gem install mdl
-      - run: mdl docs/ || *.md
+      - run: mdl docs/
 
 jobs:
   lint_documents:
