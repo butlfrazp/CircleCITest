@@ -1,0 +1,5 @@
+﻿<Properties StartupConfiguration="{EBD702C0-D7BD-437F-B075-EA0C6F716454}|Default">
+  <MonoDevelop.Ide.ItemProperties.CircleCiTestFunction PreferredExecutionTarget="MonoDevelop.Default" FirstBuild="True" />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.CircleCiTestFunctionTests FirstBuild="True" />
+</Properties>
