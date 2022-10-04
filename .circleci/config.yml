@@ -16,7 +16,7 @@ commands:
     description: "markdown linting"
     steps:
       - update_alpine_and_checkout
-      - run: gem install mdl
+      - run: sudo gem install mdl
       - run: mdl docs/ || *.md
 
 jobs:
