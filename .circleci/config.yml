@@ -12,6 +12,8 @@ commands:
     description: Run Alpine updates to ensure we are running latest versions of software and checkout git repo locally.
     steps:
       - run: sudo apt-get update && sudo apt install ruby-dev
+      - checkout
+
   lint_markdown:
     description: "markdown linting"
     steps:
