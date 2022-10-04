@@ -17,13 +17,6 @@ commands:
       - run: apk add --no-cache <<parameters.packages>>
   lint_markdown:
     description: "markdown linting"
-    parameters:
-      lint-dir:
-        default: .
-        description: |
-          Directory within to lint all markdown files,
-          defaults to the working directory (.)
-        type: string
     steps:
       - update_alpine_and_checkout
       - run: gem install mdl
@@ -34,7 +27,7 @@ commands:
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  lint-documents:
+  lint_documents:
     docker:
       - image: cimg/base:stable
     steps:
@@ -46,5 +39,5 @@ workflows:
   version: 2
   linting:
     jobs:
-      - lint-documents
+      - lint_documents
           
