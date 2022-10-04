@@ -2,25 +2,49 @@
 # See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 
+commands:
+  update_alpine_and_checkout:
+    description: Run Alpine updates to ensure we are running latest versions of software and checkout git repo locally.
+    parameters:
+      packages:
+        default: >-
+          bash git wget curl openssh unzip nano tar gzip build-base binutils cmake
+          make libgcc musl-dev gcc g++
+        description: space separated list of extra packages to install
+        type: string
+    steps:
+      - run: apk update && apk upgrade --no-cache
+      - run: apk add --no-cache <<parameters.packages>>
+  lint_markdown:
+    description: "markdown linting"
+    parameters:
+      lint-dir:
+        default: .
+        description: |
+          Directory within to lint all markdown files,
+          defaults to the working directory (.)
+        type: string
+    steps:
+      - update_alpine_and_checkout
+      - run: gem install mdl
+      - run: mdl docs/
+
+
+
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  say-hello:
-    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
+  lint-documents:
     docker:
       - image: cimg/base:stable
-    # Add steps to the job
-    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
-      - checkout
-      - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
+      - lint_markdown
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
-  say-hello-workflow:
+  version: 2
+  linting:
     jobs:
-      - say-hello
+      - lint-documents
+          
