@@ -38,6 +38,7 @@ jobs:
       - run:
           name: terraform init & plan
           command: |
+            tflint
             terraform -chdir=terraform init -input=false
             terraform -chdir=terraform plan -out tfapply
       - persist_to_workspace:
