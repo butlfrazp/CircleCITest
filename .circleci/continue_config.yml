@@ -38,8 +38,8 @@ jobs:
       - run:
           name: terraform init & plan
           command: |
-            terraform --chdir=terraform init -input=false
-            terraform --chdir=terraform plan -out tfapply
+            terraform -chdir=terraform init -input=false
+            terraform -chdir=terraform plan -out tfapply
       - persist_to_workspace:
           root: .
           paths:
