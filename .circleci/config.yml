@@ -30,8 +30,7 @@ commands:
     description: "build and test csharp code!"
     steps:
       - update_dotnet
-      - run: dotnet build
-      - run: dotnet test
+      - run: dotnet build CircleCiTestFunction/CircleCiTestFunction.sln
 
 jobs:
   lint_documents:
