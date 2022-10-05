@@ -7,6 +7,9 @@ parameters:
   build_infrastructure:
     type: boolean
     default: false
+  build_code:
+    type: boolean
+    default: false
 
 orbs:
   terraform: "circleci/terraform@3.1.0"
