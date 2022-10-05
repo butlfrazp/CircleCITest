@@ -17,7 +17,7 @@ commands:
   update_dotnet:
     description: Install or update dot net 
     steps:
-      - run: sudo apt-get update && sudo apt-get install -y dotnet6
+      - run: sudo apt-get update && sudo apt-get install -y dotnet6 && sudo apt-get install -y dotnet-runtime-6.0
 
   lint_markdown:
     description: "markdown linting"
@@ -30,8 +30,8 @@ commands:
     description: "build and test csharp code!"
     steps:
       - update_dotnet
-      - run: dotnet6 build
-      - run: dotnet6 test
+      - run: dotnet build
+      - run: dotnet test
 
 jobs:
   lint_documents:
