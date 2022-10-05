@@ -7,10 +7,9 @@ parameters:
   build_infrastructure:
     type: boolean
     default: false
-  
 
 orbs:
-  terraform: "circleci/terraform@1.1.0"
+  terraform: "circleci/terraform@3.1.0"
 
 executors:
   markdown_linter:
