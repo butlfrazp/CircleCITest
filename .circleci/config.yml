@@ -30,8 +30,8 @@ commands:
     description: "build and test csharp code!"
     steps:
       - update_dotnet
-      - run: dotnet build
-      - run: dotnet test
+      - run: dotnet6 build
+      - run: dotnet6 test
 
 jobs:
   lint_documents:
