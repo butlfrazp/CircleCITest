@@ -8,13 +8,13 @@ public class CircleCiTestFunctionUnitTests
     }
 
     [Test]
-    public void ThisTestWillAlwaysFail()
+    public void ThisTestWillAlwaysSucceed()
     {
-        Assert.Fail();
+        Assert.Pass();
     }
 
     [Test]
-    public void ThisTestWillAlwyasPass()
+    public void ThisTestWillAlwaysPass()
     {
         Assert.Pass();
     }
