@@ -1,0 +1,97 @@
+version: 2.1
+
+parameters:
+  markdown_linter:
+    type: boolean
+    default: false
+  build_infrastructure:
+    type: boolean
+    default: false
+
+orbs:
+  terraform: "circleci/terraform@3.1.0"
+  win: circleci/windows@5.0
+
+executors:
+  markdown_linter:
+    docker:
+      - image: davidanson/markdownlint-cli2
+
+commands:
+  lint_markdown:
+    description: "markdown linting"
+    steps:
+      - run: markdownlint-cli2 "**/*.md"
+
+  check_init_and_plan_terraform:
+    description: "terraform init and plan"
+    steps:
+      - run:
+          name: terraform init & plan
+          command: |
+            terraform -chdir=terraform fmt -check
+            terraform -chdir=terraform init -input=false
+            terraform -chdir=terraform plan -out tfapply
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
+  build_test:
+    description: "build and test csharp code!"
+    steps:
+      - checkout
+      - run:
+          name: Restore solution dependencies and tools
+          command: dotnet restore CircleCiTestFunction/CircleCiTestFunction.sln
+      - run:
+          name: Build solution 
+          command: dotnet build CircleCiTestFunction/CircleCiTestFunction.sln
+      - run:
+          name: "Running tests"
+          command: dotnet test CircleCiTestFunction/CircleCiTestFunction.sln
+
+
+
+jobs:
+  lint_documents:
+    executor: markdown_linter
+    steps:
+      - checkout
+      - lint_markdown
+
+  build_test:
+    executor:
+      name: win/default
+    steps:
+      - build_test
+
+  lint_init_plan_terraform:
+    working_directory: /tmp/project
+    docker:
+      - image: docker.mirror.hashicorp.services/hashicorp/terraform:light
+    steps:
+      - checkout
+      - check_init_and_plan_terraform
+
+workflows:
+  version: 2
+  linting_documents:
+    when: << pipeline.parameters.markdown_linter >>
+    jobs:
+      - lint_documents
+
+  build_infrastructure:
+    when: << pipeline.parameters.build_infrastructure >>
+    jobs:
+      - lint_init_plan_terraform
+
+  build_code:
+    when: << pipeline.parameters.build_code >>
+    jobs:
+      - build_test
+
+
+
+
+

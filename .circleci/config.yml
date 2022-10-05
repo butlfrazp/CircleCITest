@@ -2,73 +2,17 @@
 # See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 
+setup: true
+
 orbs:
-  win: circleci/windows@5.0
-
-executors:
-  base:
-    docker:
-      - image: cimg/base:stable
-
-commands:
-  update_alpine_and_checkout:
-    description: Run Alpine updates to ensure we are running latest versions of software and checkout git repo locally.
-    steps:
-      - run: sudo apt-get update && sudo apt install ruby-dev
-      - checkout
-
-  lint_markdown:
-    description: "markdown linting"
-    steps:
-      - update_alpine_and_checkout
-      - run: sudo gem install mdl
-      - run: mdl docs/
-
-  build_test:
-    description: "build and test csharp code!"
-    steps:
-      - checkout
-      - run:
-          name: Restore solution dependencies and tools
-          command: dotnet restore CircleCiTestFunction/CircleCiTestFunction.sln
-      - run:
-          name: Build solution 
-          command: dotnet build CircleCiTestFunction/CircleCiTestFunction.sln
-      - run:
-          name: "Running tests"
-          command: dotnet test CircleCiTestFunction/CircleCiTestFunction.sln
-
-jobs:
-  lint_documents:
-    executor: base
-    steps:
-      - lint_markdown
-
-  build_test:
-    executor:
-      name: win/default
-    steps:
-      - build_test
-  
-  
+  path-filtering: circleci/path-filtering@0.0.1          
 
 workflows:
-  version: 2
-  linting_documents:
+  setup-workflow:
     jobs:
-      - lint_documents
-  build_test:
-    jobs:
-      - build_test
-  
-  # pr_azure_functions:
-  #   jobs:
-  #     - build_and_test_functions
-  # ci_azure_functions:
-  #   jobs:
-  #     - build_and_test_functions
-  #     - push_artifact
-  # pr_iac:
-  #   jobs:
-  #     - lint
-          
+     - path-filtering/filter:
+       mapping: |
+         .*.md markdown_linter true
+         terraform/.* build_infrastructure true
+         CircleCiTestFunction/.* build_code true
+       base-revision: origin/master
