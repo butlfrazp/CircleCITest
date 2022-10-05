@@ -5,7 +5,7 @@ VisualStudioVersion = 25.0.1703.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CircleCiTestFunction", "CircleCiTestFunction\CircleCiTestFunction.csproj", "{EBD702C0-D7BD-437F-B075-EA0C6F716454}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CircleCiTestFunctionTests", "CircleCiTestFunctionTests\CircleCiTestFunctionTests.csproj", "{7F72F181-1283-4CCB-BF6F-13B96769F211}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CircleCiTestFunctionTests", "CircleCiTestFunctionTests\CircleCiTestFunctionTests.csproj", "{7B818455-9728-49B2-B531-2B57ECC29646}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{EBD702C0-D7BD-437F-B075-EA0C6F716454}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBD702C0-D7BD-437F-B075-EA0C6F716454}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EBD702C0-D7BD-437F-B075-EA0C6F716454}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7F72F181-1283-4CCB-BF6F-13B96769F211}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7F72F181-1283-4CCB-BF6F-13B96769F211}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7F72F181-1283-4CCB-BF6F-13B96769F211}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7F72F181-1283-4CCB-BF6F-13B96769F211}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B818455-9728-49B2-B531-2B57ECC29646}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B818455-9728-49B2-B531-2B57ECC29646}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B818455-9728-49B2-B531-2B57ECC29646}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B818455-9728-49B2-B531-2B57ECC29646}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
