@@ -29,6 +29,22 @@ jobs:
       - checkout
       - lint_markdown
 
+  plan_apply:
+    working_directory: /tmp/project
+    docker:
+      - image: docker.mirror.hashicorp.services/hashicorp/terraform:light
+    steps:
+      - checkout
+      - run:
+          name: terraform init & plan
+          command: |
+            terraform --chdir=terraform init -input=false
+            terraform --chdir=terraform plan -out tfapply
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
 workflows:
   version: 2
   linting_documents:
@@ -39,17 +55,4 @@ workflows:
   build_infrastructure:
     when: << pipeline.parameters.build_infrastructure >>
     jobs:
-      - terraform/fmt:
-          checkout: true
-          context: terraform
-      - terraform/validate:
-          checkout: true
-          context: terraform
-          requires:
-            - terraform/fmt
-      - terraform/plan:
-          checkout: true
-          context: terraform
-          persist-workspace: true
-          requires:
-            - terraform/validate
+      - plan_apply
