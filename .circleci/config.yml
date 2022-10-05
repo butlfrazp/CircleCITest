@@ -13,3 +13,5 @@ workflows:
       - path-filtering/filter:
           mapping: |
             .*.md markdown_linter true
+          # Optional, defaults to main:
+          base-revision: origin/master
