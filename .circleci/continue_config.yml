@@ -21,20 +21,14 @@ commands:
     description: "markdown linting"
     steps:
       - run: markdownlint-cli2 "**/*.md"
-  
-  lint_terraform:
-    description: "installing tf lint and linting"
-    steps:
-      - run: |
-          curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
-          tflint
 
-  init_and_plan_terraform:
+  check_init_and_plan_terraform:
     description: "terraform init and plan"
     steps:
       - run:
           name: terraform init & plan
           command: |
+            terraform -chdir=terraform fmt -check
             terraform -chdir=terraform init -input=false
             terraform -chdir=terraform plan -out tfapply
       - persist_to_workspace:
@@ -57,7 +51,7 @@ jobs:
     steps:
       - checkout
       - lint_terraform
-      - init_and_plan_terraform
+      - check_init_and_plan_terraform
 
 workflows:
   version: 2
