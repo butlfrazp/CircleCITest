@@ -24,6 +24,7 @@ commands:
   build_test:
     description: "build and test csharp code!"
     steps:
+      - checkout
       - run: dotnet build
       - run: dotnet test
 
