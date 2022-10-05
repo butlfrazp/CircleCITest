@@ -69,4 +69,4 @@ workflows:
   build_infrastructure:
     when: << pipeline.parameters.build_infrastructure >>
     jobs:
-      - plan_apply
+      - lint_init_plan_terraform
