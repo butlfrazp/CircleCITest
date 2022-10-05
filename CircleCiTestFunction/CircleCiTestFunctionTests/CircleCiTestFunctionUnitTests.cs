@@ -8,26 +8,19 @@ public class CircleCiTestFunctionUnitTests
     }
 
     [Test]
-    public void ThisTestWillAlwaysSucceed()
-    {
-        Assert.Pass();
-    }
-
+    public void CoffeeFactory_MakesCoffee_CoffeeTastesGood() { }
     [Test]
-    public void ThisTestWillAlwaysPass()
-    {
-        Assert.Pass();
-    }
-
+    public void CoffeeFactory_MakesCoffee_CoffeeIsBrown() { }
     [Test]
-    public void FailingTest()
-    {
-        Assert.Fail();
-    }
-
+    public void CoffeeFactory_GrindsBeans_GrindIsMediumFine() { }
     [Test]
-    public void FailByCrash()
-    {
-        throw new Exception("Uh oh....");
-    }
+    public void CoffeeFactory_GrindsBeans_GrindIsAromatic() { }
+    [Test]
+    public void CoffeeFactory_RoastsBeans_BeansAreNotOverDone() { }
+    [Test]
+    public void CoffeeFactory_RoastsBeans_BeansAreNotUnderDone() { }
+    [Test]
+    public void CoffeeFactory_DeliversBeans_BeansAreDeliveredOnTime() { }
+    [Test]
+    public void CoffeeFactory_DeliversBeans_BeansAreDeliveredFresh() { }
 }
