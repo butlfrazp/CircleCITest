@@ -52,7 +52,7 @@ commands:
           command: dotnet build CircleCiTestFunction/CircleCiTestFunction.sln
       - run:
           name: "Running tests"
-          command: dotnet test CircleCiTestFunction/CircleCiTestFunction.sln --loggger:"junit;LogFilePath=TestResults/NUnit.xml"
+          command: dotnet test CircleCiTestFunction/CircleCiTestFunction.sln --logger:"junit;LogFilePath=TestResults/NUnit.xml"
       - store_test_results:
           path: ./CircleCiTestFunction/CircleCiTestFunctionTests/TestResults/NUnit.xml
       - store_artifacts:
