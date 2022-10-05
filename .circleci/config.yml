@@ -2,42 +2,15 @@
 # See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 
-commands:
-  update_alpine_and_checkout:
-    description: Run Alpine updates to ensure we are running latest versions of software and checkout git repo locally.
-    parameters:
-      packages:
-        default: >-
-          bash git wget curl openssh unzip nano tar gzip build-base binutils cmake
-          make libgcc musl-dev gcc g++
-        description: space separated list of extra packages to install
-        type: string
-    steps:
-      - run: apk update && apk upgrade --no-cache
-      - run: apk add --no-cache <<parameters.packages>>
-  lint_markdown:
-    description: "markdown linting"
-    steps:
-      - update_alpine_and_checkout
-      - run: gem install mdl
-      - run: mdl docs/
+setup: true
 
+orbs:
+  path-filtering: circleci/path-filtering@0.0.1          
 
-
-# Define a job to be invoked later in a workflow.
-# See: https://circleci.com/docs/2.0/configuration-reference/#jobs
-jobs:
-  lint_documents:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      - lint_markdown
-
-# Invoke jobs via workflows
-# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
-  version: 2
-  linting:
+  setup-workflow:
     jobs:
-      - lint_documents
-          
+      - path-filtering/filter:
+          mapping: |
+            .*.md markdown_linter true
+          base-revision: origin/master

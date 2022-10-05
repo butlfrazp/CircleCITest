@@ -1,0 +1,31 @@
+version: 2.1
+
+parameters:
+  markdown_linter:
+    type: boolean
+    default: false
+
+executors:
+  markdown_linter:
+    docker:
+      - image: davidanson/markdownlint-cli2
+
+commands:
+  lint_markdown:
+    description: "markdown linting"
+    steps:
+      - run: markdownlint-cli2 "**/*.md"
+
+jobs:
+  lint_documents:
+    executor: markdown_linter
+    steps:
+      - checkout
+      - lint_markdown
+
+workflows:
+  version: 2
+  linting_documents:
+    when: << pipeline.parameters.markdown_linter >>
+    jobs:
+      - lint_documents
