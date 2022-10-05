@@ -17,7 +17,8 @@ commands:
   update_dotnet:
     description: Install or update dot net 
     steps:
-      - run: sudo apt-get update && sudo apt-get install -y dotnet6 && sudo apt-get install -y dotnet-runtime-6.0
+      - run: sudo apt-get update
+      - run: sudo apt-get install -y dotnet6 
 
   lint_markdown:
     description: "markdown linting"
