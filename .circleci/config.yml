@@ -17,9 +17,8 @@ commands:
   update_dotnet:
     description: Install or update dot net 
     steps:
-      - run: wget https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
-      - run: sudo dpkg -i packages-microsoft-prod.deb
-      - run: rm packages-microsoft-prod.deb
+      - run: sudo apt-get update
+      - run: sudo apt install dotnet-sdk-6.0
 
   lint_markdown:
     description: "markdown linting"
