@@ -11,7 +11,7 @@ executors:
       - image: cimg/base:stable
   windows:
     docker:
-      - image: windows/default
+      - image: win/default
 
 commands:
   update_alpine_and_checkout:
