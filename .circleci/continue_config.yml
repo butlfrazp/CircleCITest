@@ -7,9 +7,13 @@ parameters:
   build_infrastructure:
     type: boolean
     default: false
+  build_code:
+    type: boolean
+    default: false
 
 orbs:
   terraform: "circleci/terraform@3.1.0"
+  win: circleci/windows@5.0
 
 executors:
   markdown_linter:
@@ -36,6 +40,21 @@ commands:
           paths:
             - .
 
+  build_test:
+    description: "build and test csharp code!"
+    steps:
+      - checkout
+      - run:
+          name: Restore solution dependencies and tools
+          command: dotnet restore CircleCiTestFunction/CircleCiTestFunction.sln
+      - run:
+          name: Build solution 
+          command: dotnet build CircleCiTestFunction/CircleCiTestFunction.sln
+      - run:
+          name: "Running tests"
+          command: dotnet test CircleCiTestFunction/CircleCiTestFunction.sln
+
+
 
 jobs:
   lint_documents:
@@ -43,6 +62,12 @@ jobs:
     steps:
       - checkout
       - lint_markdown
+
+  build_test:
+    executor:
+      name: win/default
+    steps:
+      - build_test
 
   lint_init_plan_terraform:
     working_directory: /tmp/project
@@ -63,3 +88,13 @@ workflows:
     when: << pipeline.parameters.build_infrastructure >>
     jobs:
       - lint_init_plan_terraform
+
+  build_code:
+    when: << pipeline.parameters.build_code >>
+    jobs:
+      - build_test
+
+
+
+
+
