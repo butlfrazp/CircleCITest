@@ -14,6 +14,11 @@ commands:
       - run: sudo apt-get update && sudo apt install ruby-dev
       - checkout
 
+  update_dotnet:
+    description: Install or update dot net 
+    steps:
+      - run: sudo apt-get update && sudo apt-get install -y dotnet6
+
   lint_markdown:
     description: "markdown linting"
     steps:
@@ -24,7 +29,7 @@ commands:
   build_test:
     description: "build and test csharp code!"
     steps:
-      - checkout
+      - update_dotnet
       - run: dotnet build
       - run: dotnet test
 
