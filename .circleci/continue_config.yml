@@ -50,7 +50,6 @@ jobs:
       - image: docker.mirror.hashicorp.services/hashicorp/terraform:light
     steps:
       - checkout
-      - lint_terraform
       - check_init_and_plan_terraform
 
 workflows:
