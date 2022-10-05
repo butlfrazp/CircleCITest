@@ -18,4 +18,16 @@ public class CircleCiTestFunctionUnitTests
     {
         Assert.Pass();
     }
+
+    [Test]
+    public void FailingTest()
+    {
+        Assert.Fail();
+    }
+
+    [Test]
+    public void FailByCrash()
+    {
+        throw new Exception("Uh oh....");
+    }
 }
