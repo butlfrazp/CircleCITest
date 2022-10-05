@@ -1,9 +1,9 @@
 terraform {
   required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "=3.0.0"
-    }
+  azurerm = {
+    source = "hashicorp/azurerm"
+    version = "=3.0.0"
+  }
   }
 }
 
@@ -12,6 +12,6 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "rg" {
-  name     = "sample-resources"
-  location = "westus2"
+name     = "sample-resources"
+location = "westus2"
 }
