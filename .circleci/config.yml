@@ -2,10 +2,16 @@
 # See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 
+orbs:
+  win: circleci/windows@5.0
+
 executors:
   base:
     docker:
       - image: cimg/base:stable
+  windows:
+    docker:
+      - image: windows/default
 
 commands:
   update_alpine_and_checkout:
@@ -13,12 +19,6 @@ commands:
     steps:
       - run: sudo apt-get update && sudo apt install ruby-dev
       - checkout
-
-  update_dotnet:
-    description: Install or update dot net 
-    steps:
-      - run: sudo apt-get update
-      - run: sudo apt install dotnet-sdk-6.0
 
   lint_markdown:
     description: "markdown linting"
@@ -30,8 +30,16 @@ commands:
   build_test:
     description: "build and test csharp code!"
     steps:
-      - update_dotnet
-      - run: dotnet build CircleCiTestFunction/CircleCiTestFunction.sln
+      - checkout
+      - run:
+          name: Restore solution dependencies and tools
+          command: dotnet restore CircleCiTestFunction/CircleCiTestFunction.sln
+      - run:
+          name: Build solution 
+          command: dotnet build CircleCiTestFunction/CircleCiTestFunction.sln
+      - run:
+          name: "Running tests"
+          command: dotnet test CircleCiTestFunction/CircleCiTestFunction.sln
 
 jobs:
   lint_documents:
@@ -40,7 +48,7 @@ jobs:
       - lint_markdown
 
   build_test:
-    executor: base
+    executor: windows
     steps:
       - build_test
   
