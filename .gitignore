@@ -300,3 +300,7 @@ __pycache__/
 *.pyc
 
 ## End Visual Studio .gitignore
+
+## Mac Os
+
+.Ds_Store
