@@ -4,6 +4,13 @@ parameters:
   markdown_linter:
     type: boolean
     default: false
+  build_infrastructure:
+    type: boolean
+    default: false
+  
+
+orbs:
+  terraform: "circleci/terraform@1.1.0"
 
 executors:
   markdown_linter:
@@ -29,3 +36,21 @@ workflows:
     when: << pipeline.parameters.markdown_linter >>
     jobs:
       - lint_documents
+
+  build_infrastructure:
+    when: << pipeline.parameters.build_infrastructure >>
+    jobs:
+      - terraform/fmt:
+          checkout: true
+          context: terraform
+      - terraform/validate:
+          checkout: true
+          context: terraform
+          requires:
+            - terraform/fmt
+      - terraform/plan:
+          checkout: true
+          context: terraform
+          persist-workspace: true
+          requires:
+            - terraform/validate
