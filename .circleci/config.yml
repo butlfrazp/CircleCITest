@@ -5,6 +5,10 @@ version: 2.1
 orbs:
   win: circleci/windows@5.0
 
+executors:
+  base:
+    docker:
+      - image: cimg/base:stable
 
 commands:
   update_alpine_and_checkout:
@@ -36,13 +40,12 @@ commands:
 
 jobs:
   lint_documents:
-    executor: 
-      name: win/default
+    executor: base
     steps:
       - lint_markdown
 
   build_test:
-    executor: 
+    executor:
       name: win/default
     steps:
       - build_test
