@@ -2,38 +2,14 @@
 # See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 
-executors:
-  markdown_linter:
-    docker:
-      - image: davidanson/markdownlint-cli2
+setup: true
 
-commands:
-  lint_markdown:
-    description: "markdown linting"
-    steps:
-      - run: markdownlint-cli2 "**/*.md"
-
-jobs:
-  lint_documents:
-    executor: markdown_linter
-    steps:
-      - checkout
-      - lint_markdown
+orbs:
+  path-filtering: circleci/path-filtering@0.0.1          
 
 workflows:
-  version: 2
-  linting_documents:
+  setup-workflow:
     jobs:
-      - lint_documents
-  
-  # pr_azure_functions:
-  #   jobs:
-  #     - build_and_test_functions
-  # ci_azure_functions:
-  #   jobs:
-  #     - build_and_test_functions
-  #     - push_artifact
-  # pr_iac:
-  #   jobs:
-  #     - lint
-          
+      - path-filtering/filter:
+          mapping: |
+            .*.md markdown_linter true
