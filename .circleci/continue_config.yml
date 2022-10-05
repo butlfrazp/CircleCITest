@@ -39,9 +39,6 @@ workflows:
   build_infrastructure:
     when: << pipeline.parameters.build_infrastructure >>
     jobs:
-      - list:
-        steps:
-          - run: ls
       - terraform/fmt:
           checkout: true
           context: terraform
