@@ -304,3 +304,8 @@ __pycache__/
 ## Mac Os
 
 .Ds_Store
+
+## Testing output
+TestResults/
+CoverageReport/
+coverage.cobertura.xml
