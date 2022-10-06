@@ -1,32 +1,19 @@
-# Authenticate Terraform to Azure
 
-For Terraform to authentica to azure, it requires: Subscription ID, Client Secret, Client ID and Tenant ID. You can obtain Subscription ID easily in
-Subscriptions, but the remaining fields can be obtained through the next steps:
+# About the Project
 
-1. Register an application with Azure ActiveDirectory and create a service principal (i.e. sp-terraform-demo-contributor)
-Create a new application secret
-1. Assign a role to the application (Owner or Contributor)
-1. Create a new application secret
-1. Register environment variables CirclesCI project > Project Settings > Environment Variables
+This is a project that defines continuous integration pipeline workflows for CircleCI. Workflows that handles:
 
-```text
-ARM_CLIENT_ID="00000000-0000-0000-0000-000000000000"
-ARM_CLIENT_SECRET="00000000-0000-0000-0000-000000000000"
-ARM_SUBSCRIPTION_ID="00000000-0000-0000-0000-000000000000"
-ARM_TENANT_ID="00000000-0000-0000-0000-000000000000"
-```
+- Lint markdown files
+- Lint yml configuration files
+- Validate terraform files
+- Preview the changes that terraform plans to make to the infrastructure
+- Build, run unit tests for Azure functions
 
-Shortcut command:
+# Project Structure
 
-```bash
-#!/bin/bash
-az ad sp create-for-rbac --name "sp-terraform-demo-contributor" \
-  --role="Contributor" \
-  --scopes="/subscriptions/<subscription ID>"
-```
-
-Related links:
-
-- [Microsoft Learn - How to create a service principal in Azure AD](https://learn.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal)
-- [Microsoft Learn - Authenticate to Azure](https://learn.microsoft.com/en-us/azure/developer/terraform/authenticate-to-azure?tabs=bash)
-- [Terraform - Configuring the service principal in Terraform with Azure](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/service_principal_client_secret#configuring-the-service-principal-in-terraform)
+- `.circleci/circleci_config.yml`: The configuration definition of all workflows. It specifies the docker image that contains tools to run the commands,
+the order of the steps to execute in each workflow.
+- `.circleci/config.yml`: Entry point that filters which workflows to execute based on the files modified in the most recent commit.
+- `docs/`: Markdown files that describe documentation on subjects such as arquitecture design, features or faqs.
+- `terraform/`: [Terraform files](https://www.terraform.io/intro) that document infrastructure resources. The current orchestrator deployment
+is Circle CI.
