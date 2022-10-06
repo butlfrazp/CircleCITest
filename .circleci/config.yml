@@ -5,7 +5,7 @@ version: 2.1
 setup: true
 
 orbs:
-  path-filtering: circleci/path-filtering@0.0.1          
+  path-filtering: circleci/path-filtering@0.0.1
 
 workflows:
   setup-workflow:
@@ -14,4 +14,5 @@ workflows:
           mapping: |
             .*.md markdown_linter true
             terraform/.* build_infrastructure true
+            CircleCiTestFunction/.* build_code true
           base-revision: origin/master
