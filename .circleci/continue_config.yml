@@ -58,7 +58,7 @@ commands:
           command: dotnet test CircleCiTestFunction/CircleCiTestFunction.sln /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura --logger:"junit;LogFilePath=TestResults/NUnit.xml"
       - run:
           name: build coverage report
-          command: .Tools/reportgenerator -reports:./CircleCiTestFunction/CircleCiTestFunctionTests/coverage.cobertura.xml -targetdir:./CircleCiTestFunction/CircleCiTestFunctionTests/TestResults/CoverageReport/
+          command: ./Tools/reportgenerator -reports:./CircleCiTestFunction/CircleCiTestFunctionTests/coverage.cobertura.xml -targetdir:./CircleCiTestFunction/CircleCiTestFunctionTests/TestResults/CoverageReport/
       - store_test_results:
           path: ./CircleCiTestFunction/CircleCiTestFunctionTests/TestResults/NUnit.xml
       - store_artifacts:
