@@ -32,7 +32,11 @@ commands:
       - run:
           name: terraform init & plan
           command: |
-            terraform -chdir=terraform fmt -check
+            if ! terraform fmt -chdir=terraform -check -list=false ../terraform; then
+              echo "There was an error linting please run 'terraform fmt' and push the formatted changes"
+              exit 0
+            fi
+
             terraform -chdir=terraform init -input=false
             terraform -chdir=terraform plan -out tfapply
       - persist_to_workspace:
