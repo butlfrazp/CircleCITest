@@ -32,7 +32,7 @@ commands:
       - run:
           name: terraform init & plan
           command: |
-            if ! terraform -chdir=terraform fmt -check -list=false ../terraform; then
+            if ! terraform -chdir=terraform fmt -check -list=false; then
               echo "There was an error linting please run 'terraform fmt' and push the formatted changes"
               exit 1
             fi
