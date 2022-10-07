@@ -1,15 +1,19 @@
 version: 2.1
 
 parameters:
-  markdown_linter:
-    type: boolean
-    default: false
-  build_infrastructure:
+  run_all:
     type: boolean
     default: false
   build_code:
     type: boolean
     default: false
+  build_infrastructure:
+    type: boolean
+    default: false
+  markdown_linter:
+    type: boolean
+    default: false
+  
 
 orbs:
   terraform: "circleci/terraform@3.1.0"
@@ -32,7 +36,11 @@ commands:
       - run:
           name: terraform init & plan
           command: |
-            terraform -chdir=terraform fmt -check
+            if ! terraform -chdir=terraform fmt -check -list=false; then
+              echo "There was an error linting please run 'terraform fmt' and push the formatted changes"
+              exit 1
+            fi
+
             terraform -chdir=terraform init -input=false
             terraform -chdir=terraform plan -out tfapply
       - persist_to_workspace:
@@ -80,17 +88,26 @@ jobs:
 workflows:
   version: 2
   linting_documents:
-    when: << pipeline.parameters.markdown_linter >>
+    when: 
+      or:
+        - << pipeline.parameters.markdown_linter >>
+        - << pipeline.parameters.run_all >>
     jobs:
       - lint_documents
 
   build_infrastructure:
-    when: << pipeline.parameters.build_infrastructure >>
+    when:
+      or:
+        - << pipeline.parameters.build_infrastructure >>
+        - << pipeline.parameters.run_all >>
     jobs:
       - lint_init_plan_terraform
 
   build_code:
-    when: << pipeline.parameters.build_code >>
+    when:
+      or:
+        - << pipeline.parameters.build_code >>
+        - << pipeline.parameters.run_all >>
     jobs:
       - build_test
 
