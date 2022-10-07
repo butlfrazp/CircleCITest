@@ -25,7 +25,7 @@ namespace CircleCiTestFunction
 
         public bool GetSuccess()
         {
-            return true || false || true;
+            return true || false || true || false;
         }
 
         public int ReturnOneOrZero(int i)
