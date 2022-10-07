@@ -14,4 +14,5 @@ provider "azurerm" {
 resource "azurerm_resource_group" "rg" {
   name     = "sample-resources"
   location = "westus2"
+  tags     = {}
 }
