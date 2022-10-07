@@ -1,15 +1,19 @@
 version: 2.1
 
 parameters:
-  markdown_linter:
-    type: boolean
-    default: false
-  build_infrastructure:
+  run_all:
     type: boolean
     default: false
   build_code:
     type: boolean
     default: false
+  build_infrastructure:
+    type: boolean
+    default: false
+  markdown_linter:
+    type: boolean
+    default: false
+  
 
 orbs:
   terraform: "circleci/terraform@3.1.0"
@@ -84,17 +88,26 @@ jobs:
 workflows:
   version: 2
   linting_documents:
-    when: << pipeline.parameters.markdown_linter >>
+    when: 
+      or:
+        - << pipeline.parameters.markdown_linter >>
+        - << pipeline.parameters.run_all >>
     jobs:
       - lint_documents
 
   build_infrastructure:
-    when: << pipeline.parameters.build_infrastructure >>
+    when:
+      or:
+        - << pipeline.parameters.build_infrastructure >>
+        - << pipeline.parameters.run_all >>
     jobs:
       - lint_init_plan_terraform
 
   build_code:
-    when: << pipeline.parameters.build_code >>
+    when:
+      or:
+        - << pipeline.parameters.build_code >>
+        - << pipeline.parameters.run_all >>
     jobs:
       - build_test
 
