@@ -309,3 +309,4 @@ __pycache__/
 TestResults/
 CoverageReport/
 coverage.cobertura.xml
+Tools/
