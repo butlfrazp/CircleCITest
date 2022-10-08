@@ -1,0 +1,7 @@
+# yamllint configuration
+# See https://yamllint.readthedocs.io/en/latest/configuration.html
+
+extends: default
+
+rules:
+  document-start: disable

@@ -47,7 +47,8 @@ commands:
           name: terraform init & plan
           command: |
             if ! terraform -chdir=terraform fmt -check -list=false; then
-              echo "There was an error linting please run 'terraform fmt' and push the formatted changes"
+              echo "There was an error linting. Please run 'terraform fmt' \
+                and push the formatted changes."
               exit 1
             fi
 
