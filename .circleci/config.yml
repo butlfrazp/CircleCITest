@@ -13,6 +13,7 @@ workflows:
       - path-filtering/filter:
           mapping: |
             .*.md markdown_linter true
+            *.y?ml yaml_linter true
             terraform/.* build_infrastructure true
             CircleCiTestFunction/.* build_code true
             .circleci/.*.yml run_all true
