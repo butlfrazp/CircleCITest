@@ -38,7 +38,7 @@ commands:
   lint_yaml:
     description: "YAML linting"
     steps:
-      - run: yamllint *.y?ml
+      - run: yamllint .
 
   check_init_and_plan_terraform:
     description: "terraform init and plan"
