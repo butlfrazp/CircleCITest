@@ -52,7 +52,7 @@ commands:
     description: "build and test csharp code!"
     parameters:
       threshold:
-        default: 90
+        default: 50
         type: integer
     steps:
       - checkout
