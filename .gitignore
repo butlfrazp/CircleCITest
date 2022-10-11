@@ -310,3 +310,7 @@ TestResults/
 CoverageReport/
 coverage.cobertura.xml
 Tools/
+coverage.json
+
+## Vs Code
+.vscode
