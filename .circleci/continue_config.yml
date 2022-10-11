@@ -13,7 +13,9 @@ parameters:
   markdown_linter:
     type: boolean
     default: false
-  
+  yaml_linter:
+    type: boolean
+    default: false
 
 orbs:
   terraform: "circleci/terraform@3.1.0"
@@ -23,12 +25,20 @@ executors:
   markdown_linter:
     docker:
       - image: davidanson/markdownlint-cli2
+  yaml_linter:
+    docker:
+      - image: sdesbure/yamllint
 
 commands:
   lint_markdown:
     description: "markdown linting"
     steps:
       - run: markdownlint-cli2 "**/*.md"
+
+  lint_yaml:
+    description: "YAML linting"
+    steps:
+      - run: yamllint .
 
   check_init_and_plan_terraform:
     description: "terraform init and plan"
@@ -37,7 +47,8 @@ commands:
           name: terraform init & plan
           command: |
             if ! terraform -chdir=terraform fmt -check -list=false; then
-              echo "There was an error linting please run 'terraform fmt' and push the formatted changes"
+              echo "There was an error linting. Please run 'terraform fmt' \
+                and push the formatted changes."
               exit 1
             fi
 
@@ -56,13 +67,11 @@ commands:
           name: Restore solution dependencies and tools
           command: dotnet restore CircleCiTestFunction/CircleCiTestFunction.sln
       - run:
-          name: Build solution 
+          name: Build solution
           command: dotnet build CircleCiTestFunction/CircleCiTestFunction.sln
       - run:
           name: "Running tests"
           command: dotnet test CircleCiTestFunction/CircleCiTestFunction.sln
-
-
 
 jobs:
   lint_documents:
@@ -70,6 +79,12 @@ jobs:
     steps:
       - checkout
       - lint_markdown
+
+  lint_pipeline_definitions:
+    executor: yaml_linter
+    steps:
+      - checkout
+      - lint_yaml
 
   build_test:
     executor:
@@ -88,12 +103,20 @@ jobs:
 workflows:
   version: 2
   linting_documents:
-    when: 
+    when:
       or:
         - << pipeline.parameters.markdown_linter >>
         - << pipeline.parameters.run_all >>
     jobs:
       - lint_documents
+
+  linting_pipeline_definitions:
+    when:
+      or:
+        - << pipeline.parameters.yaml_linter >>
+        - << pipeline.parameters.run_all >>
+    jobs:
+      - lint_pipeline_definitions
 
   build_infrastructure:
     when:
@@ -110,8 +133,3 @@ workflows:
         - << pipeline.parameters.run_all >>
     jobs:
       - build_test
-
-
-
-
-
