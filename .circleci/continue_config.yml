@@ -67,7 +67,7 @@ commands:
           command: dotnet build CircleCiTestFunction/CircleCiTestFunction.sln
       - run:
           name: Running tests
-          command: dotnet test CircleCiTestFunction/CircleCiTestFunction.sln /p:Threshold=<< parameters.threshold >> /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura --logger:"junit;LogFilePath=TestResults/NUnit.xml"
+          command: dotnet test CircleCiTestFunction/CircleCiTestFunction.sln /p:Threshold=<< parameters.threshold >> /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura --logger:"junit;LogFilePath=TestResults/NUnit.xml" -ErrorAction SilentlyContinue
       - run:
           name: build coverage report
           command: ./Tools/reportgenerator -reports:./CircleCiTestFunction/CircleCiTestFunctionTests/coverage.cobertura.xml -targetdir:./CircleCiTestFunction/CircleCiTestFunctionTests/TestResults/CoverageReport/
