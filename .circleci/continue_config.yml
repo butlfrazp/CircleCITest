@@ -68,11 +68,12 @@ commands:
       - run:
           name: Run tests and build coverage report
           command: |
+            # build reports even if dotnet test fails, then throw to inform Circle CI to mark the step as failed
             dotnet test CircleCiTestFunction/CircleCiTestFunction.sln /p:Threshold=<< parameters.threshold >> /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura --logger:"junit;LogFilePath=TestResults/NUnit.xml"
             $test_succeeded=$?
             ./Tools/reportgenerator -reports:./CircleCiTestFunction/CircleCiTestFunctionTests/coverage.cobertura.xml -targetdir:./CircleCiTestFunction/CircleCiTestFunctionTests/TestResults/CoverageReport/
             if(!$test_succeeded) {
-              throw "Failure"
+              throw "Failure running tests."
             }
       - store_test_results:
           path: ./CircleCiTestFunction/CircleCiTestFunctionTests/TestResults/NUnit.xml
