@@ -71,7 +71,7 @@ commands:
             dotnet test CircleCiTestFunction/CircleCiTestFunction.sln /p:Threshold=<< parameters.threshold >> /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura --logger:"junit;LogFilePath=TestResults/NUnit.xml"
             $test_succeeded=$?
             ./Tools/reportgenerator -reports:./CircleCiTestFunction/CircleCiTestFunctionTests/coverage.cobertura.xml -targetdir:./CircleCiTestFunction/CircleCiTestFunctionTests/TestResults/CoverageReport/
-            $test_succeeded
+            exit $test_succeeded
       - store_test_results:
           path: ./CircleCiTestFunction/CircleCiTestFunctionTests/TestResults/NUnit.xml
       - store_artifacts:
