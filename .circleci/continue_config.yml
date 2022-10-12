@@ -102,7 +102,7 @@ workflows:
         - << pipeline.parameters.run_all >>
     jobs:
       - lint_init_plan_terraform
-          context: 'dev'
+          context: dev
 
   build_code:
     when:
