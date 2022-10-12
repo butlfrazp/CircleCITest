@@ -102,7 +102,19 @@ workflows:
         - << pipeline.parameters.run_all >>
     jobs:
       - lint_init_plan_terraform:
-          context: dev
+          name: Build Infrastructure Dev
+          context:
+            - dev
+          filters:
+            branches:
+              ignore: master
+      - lint_init_plan_terraform:
+          name: Build Infrastructure Prod
+          context:
+            - prod
+          filters:
+            branches:
+              only: master
 
   build_code:
     when:
