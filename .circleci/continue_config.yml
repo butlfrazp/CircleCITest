@@ -96,13 +96,13 @@ workflows:
       - lint_documents
 
   build_infrastructure:
-    context: 'dev'
     when:
       or:
         - << pipeline.parameters.build_infrastructure >>
         - << pipeline.parameters.run_all >>
     jobs:
       - lint_init_plan_terraform
+          context: 'dev'
 
   build_code:
     when:
