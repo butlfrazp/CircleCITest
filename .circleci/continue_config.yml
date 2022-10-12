@@ -96,6 +96,7 @@ workflows:
       - lint_documents
 
   build_infrastructure:
+    context: 'dev'
     when:
       or:
         - << pipeline.parameters.build_infrastructure >>
