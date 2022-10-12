@@ -11,6 +11,7 @@ workflows:
   setup-workflow:
     jobs:
       - path-filtering/filter:
+          context: 'dev'
           mapping: |
             .*.md markdown_linter true
             terraform/.* build_infrastructure true
