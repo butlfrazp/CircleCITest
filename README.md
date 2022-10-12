@@ -1,5 +1,5 @@
 
-# About the Project
+# About the Project [![CircleCI](https://dl.circleci.com/status-badge/img/gh/butlfrazp/CircleCITest/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/butlfrazp/CircleCITest/tree/master)
 
 This is a project that defines continuous integration pipeline workflows for CircleCI. Workflows that handles:
 
