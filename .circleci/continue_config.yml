@@ -101,7 +101,7 @@ workflows:
         - << pipeline.parameters.build_infrastructure >>
         - << pipeline.parameters.run_all >>
     jobs:
-      - lint_init_plan_terraform
+      - lint_init_plan_terraform:
           context: dev
 
   build_code:
