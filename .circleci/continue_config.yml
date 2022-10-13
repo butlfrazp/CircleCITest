@@ -61,33 +61,33 @@ commands:
           command: dotnet tool install dotnet-reportgenerator-globaltool --version 5.1.10 --tool-path Tools/
       - run:
           name: Restore solution dependencies and tools
-          command: dir "*.sln" -Recurse | %{dotnet restore $_.FullName}
+          command: dir "*.csproj" -Recurse | %{dotnet restore $_.FullName}
       - run:
           name: Build solution 
-          command: dir "*.sln" -Recurse | %{dotnet build $_.FullName}
+          command: dir "*.csproj" -Recurse | %{dotnet build $_.FullName}
       - run:
           name: Run tests and build coverage report
           command: |
             # build reports even if dotnet test fails, then throw to inform Circle CI to mark the step as failed
 
             $test_projs = Get-ChildItem -Include "*.UnitTests.csproj" -Recurse
-            $test_results_dir = (Get-Location).Path+"/TestResults/"
-            $coverage_reports_dir = (Get-Location).Path+"/CoverageReports/"
+            $test_results_dir = (Get-Location).Path+"/TestResults"
+            $coverage_reports_dir = (Get-Location).Path+"/CoverageReports"
             $test_success = $true
 
             foreach($test_proj in $test_projs) {
-              dotnet test ${test_proj.FullName} `
+              dotnet test $test_proj.FullName `
                 /p:Threshold=<< parameters.threshold >> `
                 /p:CollectCoverage=true `
                 /p:CoverletOutputFormat=cobertura `
-                --logger:"junit;LogFilePath=TestResults/NUnit-${test_proj.Name}.xml"
+                --logger:"junit;LogFilePath="$($test_results_dir)/NUnit-$($test_proj.Name).xml"
 
               $test_success = $test_success -and $?
-              $cobertura_output = (Split-Path -Path ${test_proj.FullName}) + "/coverage.cobertura.xml"
+              $cobertura_output = (Split-Path -Path $test_proj.FullName) + "/coverage.cobertura.xml"
 
               ./Tools/reportgenerator `
                 -reports:$cobertura_output `
-                -targetdir:"$coverage_reports_dir/${test_proj.Name}"
+                -targetdir:"$coverage_reports_dir/$($test_proj.Name)"
             }
 
             if(!$test_succeeded) {
