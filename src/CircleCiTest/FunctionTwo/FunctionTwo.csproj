@@ -5,6 +5,13 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="4.1.1" />
+    <PackageReference Include="coverlet.msbuild" Version="3.1.2">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="coverlet.msbuild" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">
