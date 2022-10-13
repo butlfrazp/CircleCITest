@@ -88,7 +88,7 @@ commands:
             }
 
             ./Tools/reportgenerator `
-              -reports:"$((Get-ChildItem $coverage_raw_dir  | %{ $_.Name }) -join ';')" `
+              -reports:"$((Get-ChildItem $coverage_raw_dir  | %{ $_.FullName }) -join ';')" `
               -targetdir:"$coverage_output_dir/"
 
             if(!$test_success) {
