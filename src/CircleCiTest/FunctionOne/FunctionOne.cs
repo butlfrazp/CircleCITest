@@ -32,5 +32,44 @@ namespace FunctionOne
             return new OkObjectResult(responseMessage);
         }
     }
+
+    public class FunctionOneHelper
+    {
+        public FunctionOneHelper()
+        { 
+        }
+
+        public void TestMe1(int x, int y)
+        {
+            if (x < 100)
+            {
+                Console.WriteLine($"{100+y}");
+            }
+            else if (x < 200)
+            {
+                Console.WriteLine($"{200+y}");
+            }
+            else if (x < 300)
+            { 
+                Console.WriteLine($"{300+y}");
+            }
+        }
+
+        public void TestMe2(int x, int y)
+        {
+            if (x < 100)
+            {
+                Console.WriteLine($"{100+y}");
+            }
+            else if (x < 200)
+            {
+                Console.WriteLine($"{200+y}");
+            }
+            else if (x < 300)
+            { 
+                Console.WriteLine($"{300+y}");
+            }
+        }
+    }
 }
 

@@ -25,4 +25,7 @@
     <None Remove="JunitXml.TestLogger" />
     <None Remove="coverlet.msbuild" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FunctionOne\FunctionOne.csproj" />
+  </ItemGroup>
 </Project>

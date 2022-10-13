@@ -8,8 +8,18 @@ public class Tests
     }
 
     [Test]
-    public void Test1()
+    public void GetCoverage()
     {
-        Assert.Pass();
+        var sut = new FunctionOneHelper();
+
+        sut.TestMe1(0, 100);
+        sut.TestMe1(100, 100);
+        sut.TestMe1(200, 100);
+        sut.TestMe1(300, 100);
+
+        sut.TestMe2(0, 100);
+        sut.TestMe2(100, 100);
+        sut.TestMe2(200, 100);
+        sut.TestMe2(300, 100);
     }
 }
