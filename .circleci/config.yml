@@ -14,6 +14,6 @@ workflows:
           mapping: |
             .*.md markdown_linter true
             terraform/.* build_infrastructure true
-            CircleCiTestFunction/.* build_code true
+            src/.* build_code true
             .circleci/.*.yml run_all true
           base-revision: origin/master

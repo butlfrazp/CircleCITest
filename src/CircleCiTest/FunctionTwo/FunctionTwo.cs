@@ -8,11 +8,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
-namespace CircleCiTestFunction
+namespace FunctionTwo
 {
-    public static class CircleCiTestFunction
+    public static class FunctionTwo
     {
-        [FunctionName("CircleCiTestFunction")]
+        [FunctionName("FunctionTwo")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
@@ -32,5 +32,45 @@ namespace CircleCiTestFunction
             return new OkObjectResult(responseMessage);
         }
     }
+
+    public class FunctionTwoHelper
+    {
+        public FunctionTwoHelper()
+        { 
+        }
+
+        public void TestMe1(int x, int y)
+        {
+            if (x < 100)
+            {
+                Console.WriteLine($"{100+y}");
+            }
+            else if (x < 200)
+            {
+                Console.WriteLine($"{200+y}");
+            }
+            else if (x < 300)
+            { 
+                Console.WriteLine($"{300+y}");
+            }
+        }
+
+        public void TestMe2(int x, int y)
+        {
+            if (x < 100)
+            {
+                Console.WriteLine($"{100+y}");
+            }
+            else if (x < 200)
+            {
+                Console.WriteLine($"{200+y}");
+            }
+            else if (x < 300)
+            { 
+                Console.WriteLine($"{300+y}");
+            }
+        }
+    }
+
 }
 

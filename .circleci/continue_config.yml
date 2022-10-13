@@ -69,19 +69,37 @@ commands:
           name: Run tests and build coverage report
           command: |
             # build reports even if dotnet test fails, then throw to inform Circle CI to mark the step as failed
-            dotnet test CircleCiTestFunction/CircleCiTestFunction.sln /p:Threshold=<< parameters.threshold >> /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura --logger:"junit;LogFilePath=TestResults/NUnit.xml"
-            $test_succeeded=$?
-            ./Tools/reportgenerator -reports:./CircleCiTestFunction/CircleCiTestFunctionTests/coverage.cobertura.xml -targetdir:./CircleCiTestFunction/CircleCiTestFunctionTests/TestResults/CoverageReport/
+
+            $test_projs = Get-ChildItem -Inlcude "*.UnitTests.csproj" -Recurse
+            $test_results_dir = (Get-Location).Path+"/TestResults/"
+            $coverage_reports_dir = (Get-Location).Path+"/CoverageReports/"
+            $test_success = $true
+
+            foreach($test_proj in $test_projs) {
+              dotnet test ${test_proj.FullName} `
+                /p:Threshold=<< parameters.threshold >> `
+                /p:CollectCoverage=true `
+                /p:CoverletOutputFormat=cobertura `
+                --logger:"junit;LogFilePath=TestResults/NUnit-${test_proj.Name}.xml"
+
+              $test_success = $test_success -and $?
+              $cobertura_output = (Split-Path -Path ${test_proj.FullName}) + "/coverage.cobertura.xml"
+
+              ./Tools/reportgenerator `
+                -reports:$cobertura_output `
+                -targetdir:"$coverage_reports_dir/${test_proj.Name}"
+            }
+
             if(!$test_succeeded) {
               throw "Failure running tests."
             }
-      - store_test_results:
-          path: ./CircleCiTestFunction/CircleCiTestFunctionTests/TestResults/NUnit.xml
-      - store_artifacts:
-          path: ./CircleCiTestFunction/CircleCiTestFunctionTests/TestResults/NUnit.xml
-      - store_artifacts:
-          path: ./CircleCiTestFunction/CircleCiTestFunctionTests/TestResults/CoverageReport/
 
+      - store_test_results:
+          path: TestResults/
+      - store_artifacts:
+          path: TestResults/
+      - store_artifacts:
+          path: CoverageReports/
 
 jobs:
   lint_documents:

@@ -1,8 +1,8 @@
 ﻿{
   "profiles": {
-    "CircleCiTestFunction": {
+    "FunctionTwo": {
       "commandName": "Project",
-      "commandLineArgs": "--port 7198",
+      "commandLineArgs": "--port 7026",
       "launchBrowser": false
     }
   }
