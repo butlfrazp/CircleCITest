@@ -72,7 +72,8 @@ commands:
 
             $test_projs = Get-ChildItem -Include "*.UnitTests.csproj" -Recurse
             $test_results_dir = (Get-Location).Path+"/TestResults"
-            $coverage_reports_dir = (Get-Location).Path+"/CoverageReports"
+            $coverage_output_dir = (Get-Location).Path+"/CoverageReports/Builds/"
+            $coverage_raw_dir =  (Get-Location).Path+"/CoverageReports/Raw/"
             $test_success = $true
 
             foreach($test_proj in $test_projs) {
@@ -80,15 +81,17 @@ commands:
                 /p:Threshold=<< parameters.threshold >> `
                 /p:CollectCoverage=true `
                 /p:CoverletOutputFormat=cobertura `
+                /p:CoverletOutput=$coverage_raw_dir `
                 --logger:"junit;LogFilePath=$($test_results_dir)/NUnit-$($test_proj.Name).xml"
 
               $test_success = $test_success -and $?
               $cobertura_output = (Split-Path -Path $test_proj.FullName) + "/coverage.cobertura.xml"
 
-              ./Tools/reportgenerator `
-                -reports:$cobertura_output `
-                -targetdir:"$coverage_reports_dir/$($test_proj.Name)"
             }
+
+            ./Tools/reportgenerator `
+              -reports:"$((dir  | % { $_.Name }) -join ';')" `
+              -targetdir:"$coverage_reports_dir/$($test_proj.Name)"
 
             if(!$test_success) {
               throw "Failure running tests."
@@ -99,7 +102,7 @@ commands:
       - store_artifacts:
           path: TestResults/
       - store_artifacts:
-          path: CoverageReports/
+          path: CoverageReports/Build/
 
 jobs:
   lint_documents:
