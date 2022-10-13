@@ -90,7 +90,7 @@ commands:
                 -targetdir:"$coverage_reports_dir/$($test_proj.Name)"
             }
 
-            if(!$test_succeeded) {
+            if(!$test_success) {
               throw "Failure running tests."
             }
 
