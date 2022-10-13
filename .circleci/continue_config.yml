@@ -72,7 +72,7 @@ commands:
 
             $test_projs = Get-ChildItem -Include "*.UnitTests.csproj" -Recurse
             $test_results_dir = (Get-Location).Path+"/TestResults"
-            $coverage_output_dir = (Get-Location).Path+"/CoverageReports/Builds"
+            $coverage_output_dir = (Get-Location).Path+"/CoverageReports/Build"
             $coverage_raw_dir =  (Get-Location).Path+"/CoverageReports/Raw"
             $test_success = $true
 
