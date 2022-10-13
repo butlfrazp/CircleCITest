@@ -70,7 +70,7 @@ commands:
           command: |
             # build reports even if dotnet test fails, then throw to inform Circle CI to mark the step as failed
 
-            $test_projs = Get-ChildItem -Inlcude "*.UnitTests.csproj" -Recurse
+            $test_projs = Get-ChildItem -Include "*.UnitTests.csproj" -Recurse
             $test_results_dir = (Get-Location).Path+"/TestResults/"
             $coverage_reports_dir = (Get-Location).Path+"/CoverageReports/"
             $test_success = $true
