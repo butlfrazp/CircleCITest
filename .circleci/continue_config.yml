@@ -80,7 +80,7 @@ commands:
                 /p:Threshold=<< parameters.threshold >> `
                 /p:CollectCoverage=true `
                 /p:CoverletOutputFormat=cobertura `
-                --logger:"junit;LogFilePath="$($test_results_dir)/NUnit-$($test_proj.Name).xml"
+                --logger:"junit;LogFilePath=$($test_results_dir)/NUnit-$($test_proj.Name).xml"
 
               $test_success = $test_success -and $?
               $cobertura_output = (Split-Path -Path $test_proj.FullName) + "/coverage.cobertura.xml"
