@@ -61,10 +61,10 @@ commands:
           command: dotnet tool install dotnet-reportgenerator-globaltool --version 5.1.10 --tool-path Tools/
       - run:
           name: Restore solution dependencies and tools
-          command: dotnet restore src\*\*.sln
+          command: dotnet restore src/CircleCiTest/CircleCiTest.sln
       - run:
           name: Build solution 
-          command: dotnet build src\*\*.sln
+          command: dotnet build src/CircleCiTest/CircleCiTest.sln
       - run:
           name: Run tests and build coverage report
           command: |
