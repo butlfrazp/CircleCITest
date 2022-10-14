@@ -83,7 +83,6 @@ commands:
                 /p:CollectCoverage=true `
                 /p:CoverletOutputFormat=cobertura `
                 /p:CoverletOutput="$coverage_raw_dir/$($test_proj.BaseName).xml" `
-                /p:Include="[$assembly_name]*" `
                 --logger:"junit;LogFilePath=$($test_results_dir)/NUnit-$($test_proj.BaseName).xml"
 
               $test_success = $test_success -and $?
