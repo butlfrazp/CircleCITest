@@ -68,8 +68,9 @@ commands:
       - run:
           name: Run tests and build coverage report
           command: |
-            # build reports even if dotnet test fails, then throw to inform Circle CI to mark the step as failed
 
+            # run dotnet test on all projects ending in .UnitTests.csproj
+            # There should be one [Name].UnitTests.csproj for every [Name].csproj
             $test_projs = Get-ChildItem -Include "*.UnitTests.csproj" -Recurse
             $test_results_dir = (Get-Location).Path+"/TestResults"
             $coverage_output_dir = (Get-Location).Path+"/CoverageReports/Build"
@@ -77,21 +78,28 @@ commands:
             $test_success = $true
 
             foreach($test_proj in $test_projs) {
+              # Include only the assembly being tested, this will prevent low coverage
+              # on projects that the current test proj references but doesn't test.
               $assembly_name = "$((basename $test_proj) -replace ".UnitTests.csproj")"
               dotnet test $test_proj.FullName `
                 /p:Threshold=<< parameters.threshold >> `
                 /p:CollectCoverage=true `
                 /p:CoverletOutputFormat=cobertura `
                 /p:CoverletOutput="$coverage_raw_dir/$($test_proj.BaseName).xml" `
+                /p:Include="[$assembly_name]*" `
                 --logger:"junit;LogFilePath=$($test_results_dir)/NUnit-$($test_proj.BaseName).xml"
 
+              # Continue running tests even if one fails, so that results for
+              # all tests will be available regardless.
               $test_success = $test_success -and $?
             }
 
+            # build all coverage XML reports into one HTML report
             ./Tools/reportgenerator `
               -reports:"$((Get-ChildItem $coverage_raw_dir  | %{ $_.FullName }) -join ';')" `
               -targetdir:"$coverage_output_dir/"
 
+            # throw to mark step as failed in Circle CI
             if(!$test_success) {
               throw "Failure running tests."
             }
