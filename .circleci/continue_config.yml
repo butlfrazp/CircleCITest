@@ -77,11 +77,13 @@ commands:
             $test_success = $true
 
             foreach($test_proj in $test_projs) {
+              $assembly_name = "$((basename $test_proj) -replace ".UnitTests.csproj")"
               dotnet test $test_proj.FullName `
                 /p:Threshold=<< parameters.threshold >> `
                 /p:CollectCoverage=true `
                 /p:CoverletOutputFormat=cobertura `
                 /p:CoverletOutput="$coverage_raw_dir/$($test_proj.BaseName).xml" `
+                /p:Include="[$assembly_name]*" `
                 --logger:"junit;LogFilePath=$($test_results_dir)/NUnit-$($test_proj.BaseName).xml"
 
               $test_success = $test_success -and $?
@@ -94,7 +96,6 @@ commands:
             if(!$test_success) {
               throw "Failure running tests."
             }
-
 
       - store_test_results:
           path: TestResults/
