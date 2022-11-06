@@ -52,12 +52,12 @@ commands:
               exit 1
             fi
 
-            terraform -chdir=terraform init -input=false
+            terraform -chdir=terraform init
             terraform -chdir=terraform plan -out tfapply
       - persist_to_workspace:
-          root: .
+          root: terraform
           paths:
-            - ./terraform
+            - ./
 
   apply_terraform:
     description: "terraform apply"
@@ -67,7 +67,9 @@ commands:
       - run:
           name: terraform
           command: |
-            terraform apply -auto-approve tfapply
+            terraform \
+              -chdir=/tmp/terraform apply \
+              -auto-approve /tmp/terraform/tfapply
 
   build_test:
     description: "build and test csharp code!"
@@ -147,9 +149,9 @@ workflows:
             - dev
           requires:
             - lint_init_plan_terraform
-          filters:
-            branches:
-              only: master
+          # filters:
+          #   branches:
+          #     only: master
 
   build_code:
     when:
