@@ -63,15 +63,11 @@ commands:
     description: "terraform apply"
     steps:
       - attach_workspace:
-          at: .
+          at: /tmp/terraform
       - run:
           name: terraform
           command: |
             terraform apply -auto-approve tfapply
-      - persist_to_workspace:
-          root: .
-          paths:
-            - ./terraform
 
   build_test:
     description: "build and test csharp code!"
@@ -117,7 +113,6 @@ jobs:
     docker:
       - image: docker.mirror.hashicorp.services/hashicorp/terraform:light
     steps:
-      - checkout
       - apply_terraform
 
 workflows:
