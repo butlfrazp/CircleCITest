@@ -67,6 +67,7 @@ commands:
       - run:
           name: terraform
           command: |
+            ls
             terraform apply -auto-approve tfapply
 
   build_test:
@@ -147,9 +148,9 @@ workflows:
             - dev
           requires:
             - lint_init_plan_terraform
-          filters:
-            branches:
-              only: master
+          # filters:
+          #   branches:
+          #     only: master
 
   build_code:
     when:
