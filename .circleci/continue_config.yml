@@ -57,7 +57,7 @@ commands:
       - persist_to_workspace:
           root: .
           paths:
-            - ~/terraform
+            - ./terraform
 
   apply_terraform:
     description: "terraform apply"
