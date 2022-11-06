@@ -58,7 +58,7 @@ commands:
           root: .
           paths:
             - ./terraform
-  
+
   apply_terraform:
     description: "terraform apply"
     steps:
@@ -72,7 +72,6 @@ commands:
           root: .
           paths:
             - ./terraform
-      
 
   build_test:
     description: "build and test csharp code!"
@@ -159,7 +158,6 @@ workflows:
           filters:
             branches:
               only: master
-          
 
   build_code:
     when:
