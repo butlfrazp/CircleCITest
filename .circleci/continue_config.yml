@@ -52,7 +52,7 @@ commands:
               exit 1
             fi
 
-            terraform -chdir=terraform init -input=false
+            terraform -chdir=terraform init
             terraform -chdir=terraform plan -out tfapply
       - persist_to_workspace:
           root: terraform
