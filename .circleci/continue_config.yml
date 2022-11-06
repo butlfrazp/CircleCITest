@@ -67,7 +67,7 @@ commands:
       - run:
           name: terraform
           command: |
-            terraform apply -auto-approve /tmp/terraform/tfapply
+            terraform -chdir=/tmp/terraform apply -auto-approve /tmp/terraform/tfapply
 
   build_test:
     description: "build and test csharp code!"
