@@ -152,7 +152,7 @@ workflows:
               ignore: master
       - apply_terraform:
           name: Apply terraform
-          required:
+          requires:
             - lint_init_plan_terraform
           filters:
             branches:
