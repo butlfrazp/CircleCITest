@@ -12,6 +12,6 @@ variable "env" {
 
 variable "prefix" {
   type        = string
-  default     = "pbtest"
+  default     = "pbtest54"
   description = "the prefix to add to the resources."
 }
