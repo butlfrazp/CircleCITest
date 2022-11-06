@@ -57,13 +57,13 @@ commands:
       - persist_to_workspace:
           root: .
           paths:
-            - ./terraform
+            - ~/terraform
 
   apply_terraform:
     description: "terraform apply"
     steps:
       - attach_workspace:
-          at: /tmp/terraform
+          at: /tmp
       - run:
           name: terraform
           command: |
