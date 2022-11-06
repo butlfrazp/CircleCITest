@@ -55,19 +55,19 @@ commands:
             terraform -chdir=terraform init -input=false
             terraform -chdir=terraform plan -out tfapply
       - persist_to_workspace:
-          root: .
+          root: terraform
           paths:
-            - ./terraform
+            - ./
 
   apply_terraform:
     description: "terraform apply"
     steps:
       - attach_workspace:
-          at: /
+          at: /tmp/terraform
       - run:
           name: terraform
           command: |
-            ls
+            terraform apply -auto-approve /tmp/terraform/tfapply
 
   build_test:
     description: "build and test csharp code!"
