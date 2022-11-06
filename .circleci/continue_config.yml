@@ -68,7 +68,6 @@ commands:
           name: terraform
           command: |
             ls
-            terraform apply -auto-approve tfapply
 
   build_test:
     description: "build and test csharp code!"
