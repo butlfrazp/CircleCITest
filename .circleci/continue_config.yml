@@ -63,7 +63,7 @@ commands:
     description: "terraform apply"
     steps:
       - attach_workspace:
-          at: /tmp
+          at: /
       - run:
           name: terraform
           command: |
