@@ -146,10 +146,14 @@ workflows:
         - << pipeline.parameters.run_all >>
     jobs:
       - lint_init_plan_terraform:
+          context:
+            - dev
           filters:
             branches:
               ignore: master
       - apply_terraform:
+          context:
+            - dev
           requires:
             - lint_init_plan_terraform
           filters:
