@@ -57,7 +57,22 @@ commands:
       - persist_to_workspace:
           root: .
           paths:
-            - .
+            - ./terraform
+  
+  apply_terraform:
+    description: "terraform apply"
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: terraform
+          command: |
+            terraform apply -auto-approve tfapply
+      - persist_to_workspace:
+          root: .
+          paths:
+            - ./terraform
+      
 
   build_test:
     description: "build and test csharp code!"
@@ -93,12 +108,18 @@ jobs:
       - build_test
 
   lint_init_plan_terraform:
-    working_directory: /tmp/project
     docker:
       - image: docker.mirror.hashicorp.services/hashicorp/terraform:light
     steps:
       - checkout
       - check_init_and_plan_terraform
+
+  apply_terraform:
+    docker:
+      - image: docker.mirror.hashicorp.services/hashicorp/terraform:light
+    steps:
+      - checkout
+      - apply_terraform
 
 workflows:
   version: 2
@@ -126,18 +147,17 @@ workflows:
     jobs:
       - lint_init_plan_terraform:
           name: Build Infrastructure Dev
-          context:
-            - dev
           filters:
             branches:
               ignore: master
-      - lint_init_plan_terraform:
-          name: Build Infrastructure Prod
-          context:
-            - prod
+      - apply_terraform:
+          name: Apply terraform
+          required:
+            - lint_init_plan_terraform
           filters:
             branches:
-              only: master
+              ignore: master
+          
 
   build_code:
     when:
