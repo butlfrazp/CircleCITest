@@ -146,17 +146,15 @@ workflows:
         - << pipeline.parameters.run_all >>
     jobs:
       - lint_init_plan_terraform:
-          name: Build Infrastructure Dev
           filters:
             branches:
               ignore: master
       - apply_terraform:
-          name: Apply terraform
           requires:
             - lint_init_plan_terraform
           filters:
             branches:
-              ignore: master
+              only: master
           
 
   build_code:
